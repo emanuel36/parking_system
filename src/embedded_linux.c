@@ -75,7 +75,7 @@ int get_value_ain(unsigned int ain){
 	FILE* f = NULL;
 	char path[50], leitura[5];
 
-	sprintf(path, "/sys/bus/iio/devices/iio\:device0/in_voltage%d_raw", ain);
+	//sprintf(path, "/sys/bus/iio/devices/iio\:device0/in_voltage%d_raw", ain);
 	f = fopen(path, "r");
 	fgets(leitura, 5, f);
 	fclose(f);

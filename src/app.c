@@ -1,109 +1,71 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <time.h>
 #include "embedded_linux.h"
+#include "sensor.h"
+#include "pru.h"
 
-#define LED_B		44
-#define LED_G		26
-#define LED_Y		46
-#define LED_R		65
-#define BUZZER 		44
-
-
-void alerta(unsigned int level){
-	switch(level){
-		case 1:
-		set_gpio_low(LED_B);
-		set_gpio_low(LED_G);
-		set_gpio_low(LED_Y);
-		set_gpio_low(LED_R);
-		break;
-
-		case 2:
-		set_gpio_high(LED_B);
-		set_gpio_low(LED_G);
-		set_gpio_low(LED_Y);
-		set_gpio_low(LED_R);
-		break;
-
-		case 3:
-		set_gpio_high(LED_B);
-		set_gpio_high(LED_G);
-		set_gpio_low(LED_Y);
-		set_gpio_low(LED_R);
-		break;
-
-		case 4:
-		set_gpio_high(LED_B);
-		set_gpio_high(LED_G);
-		set_gpio_high(LED_Y);
-		set_gpio_low(LED_R);
-		break;
-
-		case 5:
-		set_gpio_high(LED_B);
-		set_gpio_high(LED_G);
-		set_gpio_high(LED_Y);
-		set_gpio_high(LED_R);
-		break;
-	}
-}
-
-void init_system(){
-	init_analog_pins();
-	init_gpio(BUZZER, OUTPUT);
-	init_gpio(LED_R, OUTPUT);
-	init_gpio(LED_B, OUTPUT);
-	init_gpio(LED_G, OUTPUT);
-	init_gpio(LED_Y, OUTPUT);
-
-	set_gpio_high(LED_B);
-	usleep(100000);
-	set_gpio_low(LED_B);
-	set_gpio_high(LED_G);
-	usleep(100000);
-	set_gpio_low(LED_G);
-	set_gpio_high(LED_Y);
-	usleep(100000);
-	set_gpio_low(LED_Y);
-	set_gpio_high(LED_R);
-	usleep(100000);
-	set_gpio_low(LED_R);
-	set_gpio_high(LED_Y);
-	usleep(100000);
-	set_gpio_low(LED_Y);
-	set_gpio_high(LED_G);
-	usleep(100000);
-	set_gpio_low(LED_G);
-	set_gpio_high(LED_B);
-	usleep(100000);
-	set_gpio_low(LED_B);
-	usleep(100000);
-}
-
-#define DISTANCE_1	3800	
-#define DISTANCE_2	3000
-#define DISTANCE_3	2000
-#define DISTANCE_4	1000
-#define DISTANCE_5	500
-
-void main(){
+int main(){
+	init_system();	
 	int distance;
-	init_system();
 	while(1){
-		distance = get_value_ain(0);
-		if(distance < DISTANCE_1 && distance > DISTANCE_2){
-			alerta(2);
-		}
-		else if(distance < DISTANCE_2 && distance > DISTANCE_3){
-			alerta(3);
-		}
-		else if(distance < DISTANCE_3 && distance > DISTANCE_5){
-			alerta(4);
-		} 
-		else if(distance < DISTANCE_5){
-			alerta(5);
-		}else{
-			alerta(1);
+		distance = read_distance();
+		switch(distance){
+			case 0 ... 9:
+				alerta(5);
+				display(0);
+			break;
+
+			case 10 ... 19:
+				alerta(4);
+				display(1);
+			break;
+
+			case 20 ... 29:
+				alerta(4);
+				display(2);
+			break;
+
+			case 30 ... 39:
+				alerta(4);
+				display(3);
+			break;
+
+			case 40 ... 49:
+				alerta(3);
+				display(4);
+			break;
+
+			case 50 ... 59:
+				alerta(3);
+				display(5);
+			break;
+
+			case 60 ... 69:
+				alerta(3);
+				display(6);
+			break;
+
+			case 70 ... 79:
+				alerta(2);
+				display(7);
+			break;
+
+			case 80 ... 89:
+				alerta(2);
+				display(8);
+			break;
+
+			case 90 ... 99:
+				alerta(2);
+				display(9);
+			break;
+
+			default:
+				alerta(1);
+			break;
 		}
 	}
+	pru_disable();
+	return 0;
 }
