@@ -1,15 +1,13 @@
 #include <stdio.h>
-#include <unistd.h>
-#include <time.h>
-#include "embedded_linux.h"
 #include "sensor.h"
 #include "pru.h"
 
 int main(){
-	init_system();	
+	init_system();
 	int distance;
 	while(1){
 		distance = read_distance();
+		printf("%d\n", distance);
 		switch(distance){
 			case 0 ... 9:
 				alerta(5);
@@ -63,6 +61,7 @@ int main(){
 
 			default:
 				alerta(1);
+				display(10);
 			break;
 		}
 	}

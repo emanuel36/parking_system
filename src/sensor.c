@@ -6,7 +6,7 @@
 
 void init_system(){
 	init_pru();
-	//init_gpio(BUZZER, OUTPUT);
+	init_gpio(BUZZER, OUTPUT);
 	init_gpio(LED_R, OUTPUT);
 	init_gpio(LED_B, OUTPUT);
 	init_gpio(LED_G, OUTPUT);
@@ -15,7 +15,7 @@ void init_system(){
 	init_gpio(LOAD, OUTPUT);
 	init_gpio(MSG, OUTPUT);
 
-	/*set_gpio_high(LED_B);
+	set_gpio_high(LED_B);
 	usleep(100000);
 	set_gpio_low(LED_B);
 	set_gpio_high(LED_G);
@@ -36,7 +36,7 @@ void init_system(){
 	set_gpio_high(LED_B);
 	usleep(100000);
 	set_gpio_low(LED_B);
-	usleep(100000);*/
+	usleep(100000);
 }
 
 void alerta(unsigned int level){
@@ -53,6 +53,10 @@ void alerta(unsigned int level){
 		set_gpio_low(LED_G);
 		set_gpio_low(LED_Y);
 		set_gpio_low(LED_R);
+		set_gpio_high(BUZZER);
+		usleep(50000);
+		set_gpio_low(BUZZER);
+		usleep(230000);
 		break;
 
 		case 3:
@@ -60,6 +64,10 @@ void alerta(unsigned int level){
 		set_gpio_high(LED_G);
 		set_gpio_low(LED_Y);
 		set_gpio_low(LED_R);
+		set_gpio_high(BUZZER);
+		usleep(50000);
+		set_gpio_low(BUZZER);
+		usleep(150000);
 		break;
 
 		case 4:
@@ -67,6 +75,10 @@ void alerta(unsigned int level){
 		set_gpio_high(LED_G);
 		set_gpio_high(LED_Y);
 		set_gpio_low(LED_R);
+		set_gpio_high(BUZZER);
+		usleep(50000);
+		set_gpio_low(BUZZER);
+		usleep(90000);
 		break;
 
 		case 5:
@@ -74,6 +86,7 @@ void alerta(unsigned int level){
 		set_gpio_high(LED_G);
 		set_gpio_high(LED_Y);
 		set_gpio_high(LED_R);
+		set_gpio_high(BUZZER);
 		break;
 	}
 }

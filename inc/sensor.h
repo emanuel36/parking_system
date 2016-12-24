@@ -2,7 +2,7 @@
 #define LED_G		26
 #define LED_Y		47
 #define LED_R		46
-#define BUZZER 		19
+#define BUZZER 		60
 #define CLK			30
 #define LOAD		31
 #define MSG			48
