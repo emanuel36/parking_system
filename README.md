@@ -16,7 +16,7 @@ Debian 32 bits (Embedded Linux)
 - note: The makefile is programmed to compile on the pc (x86) and send the binary to the linux root directory.
 
 ## Usage
-- Run the binary (teste.bin)
+- Run the binary (app.bin)
 
 ## Components
 - Buttons
